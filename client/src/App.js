@@ -5,12 +5,13 @@ import "./App.css";
 import SponsoredList from "./components/SponsoredList.js";
 import NewPeopleList from "./components/NewPeopleList.js";
 import LoginPage from "./components/LoginPage.js";
+import YourGoalList from "./components/YourGoalList"
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      isLoggedIn: false
+      isLoggedIn: true
     };
   }
 
@@ -21,6 +22,7 @@ class App extends React.Component {
           <Header />
           <SponsoredList />
           <NewPeopleList />
+          <YourGoalList />
         </div>
       );
     } else {

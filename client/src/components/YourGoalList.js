@@ -1,24 +1,21 @@
 import React from 'react';
 import Container from 'react-bootstrap/Container'
-import NewPerson from './NewPerson'
+import PersonalGoal from './PersonalGoal'
 
-class NewPeopleList extends React.Component {
+class YourGoalList extends React.Component {
     constructor(props) {
         super();
         this.state = {
-            peopleList: [ 
+            goalList: [ 
                 {
-                    name: "Joe Ridgley",
                     goal_title: "This is a good title",
                     goal_description: "I really want some money",
                 }, 
                 {
-                    name: "Jake Ridgley",
                     goal_title: "This is a wierd title",
                     goal_description: "I really want some money", 
                 },  
                 {
-                    name: "Jane Ridgley",
                     goal_title: "This is a normal title",
                     goal_description: "I really want some money",
                 }
@@ -33,14 +30,13 @@ class NewPeopleList extends React.Component {
         };
         return (
             <Container className="border border-dark bg-light" >
-                <h2>Find New People to Helpify</h2>
-                <div className="sponsored-list" style={scrollableContainer}>
-                    {this.state.peopleList.map(person => {
-                        return ( <NewPerson 
-                            name={person.name} 
-                            title={person.goal_title} 
-                            description={person.goal_description} >
-                            </NewPerson>)
+                <h2>Your Goals</h2>
+                <div className="goal-list" style={scrollableContainer}>
+                    {this.state.goalList.map(goal => {
+                        return ( <PersonalGoal 
+                            title={goal.goal_title} 
+                            description={goal.goal_description} >
+                            </PersonalGoal>)
                     })}
                 </div>
             </Container>
@@ -48,4 +44,4 @@ class NewPeopleList extends React.Component {
     }
 }
 
-export default NewPeopleList;
+export default YourGoalList;
