@@ -3,39 +3,45 @@ const router = express.Router();
 const firebase = require("../database");
 const uuid = require("uuid/v4");
 
+const createUser = (req, res) => {
+  // Make sure the name property is valid
+  console.log(req.body.name);
+  if (typeof req.body.name === "undefined") {
+    return res.status(400).send({ error: "name is required" });
+  }
+
+  // If the description doesn't exist, make it empty
+  if (typeof req.body.description === "undefined") {
+    req.body.description = "";
+  }
+  console.log(req.body.email);
+  firebase
+    .getDb()
+    .collection("users")
+    .doc(req.body.email)
+    .set({
+      name: req.body.name,
+      id: uuid(),
+      description: req.body.bio,
+      pledges: []
+    })
+    .then(data => {
+      Console.log("yo good");
+      res.status(200).send({ user_id: data._path.segments[1] });
+    })
+    .catch(err => {
+      console.log("ERROR");
+      res.status(400).send({ error: "something happened: " + err });
+    });
+};
+
 router
   .get("/users/hello", (req, res) => {
     console.log("it worked");
 
     res.status(200).json({ hello: "it worked" });
   })
-  .post("/api/createuser", (req, res) => {
-    // Make sure the name property is valid
-    console.log(req.body.name);
-    if (typeof req.body.name === "undefined") {
-      return res.status(400).send({ error: "name is required" });
-    }
-
-    // If the description doesn't exist, make it empty
-    if (typeof req.body.description === "undefined") {
-      req.body.description = "";
-    }
-
-    firebase
-      .getDb()
-      .collection("users")
-      .add({
-        name: req.body.name,
-        id: uuid(),
-        description: req.body.description
-      })
-      .then(data => {
-        res.status(200).send({ user_id: data._path.segments[1] });
-      })
-      .catch(err => {
-        res.status(400).send({ error: err });
-      });
-  })
+  .post("/api/createuser", createUser)
   .get("/api/getpledges", async (req, res) => {
     // required
     if (typeof req.body.user_id === "undefined") {
@@ -132,6 +138,7 @@ router
         disabled: false
       })
       .then(data => {
+        createUser(req, res);
         return res.status(200).json(data);
       })
       .catch(err => {
