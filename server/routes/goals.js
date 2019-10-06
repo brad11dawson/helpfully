@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Database = require("../database");
+const firebase = require("../database");
 const uuid = require("uuid/v4");
 
 /*
@@ -25,7 +25,8 @@ router.get("/api/creategoal", (req, res) => {
   }
 
   // Get current user data
-  Database.getDb()
+  firebase
+    .getDb()
     .collection("users")
     .doc(req.body.created_by)
     .get()
@@ -35,7 +36,8 @@ router.get("/api/creategoal", (req, res) => {
       // get rid of the pledges
       delete user.pledges;
 
-      Database.getDb()
+      firebase
+        .getDb()
         .collection("goals")
         .add({
           goal_title: req.body.goal_title,

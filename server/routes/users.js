@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Database = require("../database");
+const firebase = require("../database");
 const uuid = require("uuid/v4");
 
 router
@@ -21,7 +21,8 @@ router
       req.body.description = "";
     }
 
-    Database.getDb()
+    firebase
+      .getDb()
       .collection("users")
       .add({
         name: req.body.name,
@@ -41,7 +42,8 @@ router
       return res.status(400).json({ error: "user_id is required" });
     }
     // console.log("userid: " + req.body.user_id);
-    await Database.getDb()
+    await firebase
+      .getDb()
       .collection("users")
       .doc(req.body.user_id)
       .get()
@@ -53,7 +55,8 @@ router
         dbPromises = [];
         doc.data().pledges.map(goalRef => {
           dbPromises.push(
-            Database.getDb()
+            firebase
+              .getDb()
               .collection("goals")
               .doc(goalRef)
               .get()
@@ -96,6 +99,43 @@ router
           error:
             "Something went wrong with accessing the user information for the current user"
         });
+      });
+  })
+
+  /*
+  POST https://helpfully.herokuapp.com/api/createaccount
+  {
+    email: string,
+    password: string,
+    name: string,
+    bio: string
+  }
+  */
+  .post("/api/createaccount", (req, res) => {
+    // required
+    if (typeof req.body.email === "undefined" || req.body.email == "") {
+      return res.status(400).json({ error: "email cannot be blank" });
+    }
+
+    console.log(req.body.password);
+    if (typeof req.body.password === "undefined" || req.body.password == "") {
+      return res.status(400).json({ error: "password cannot be blank" });
+    }
+
+    // Create a flipping user
+    firebase
+      .getAuth()
+      .createUser({
+        email: req.body.email,
+        emailVerified: false,
+        password: req.body.password,
+        disabled: false
+      })
+      .then(data => {
+        return res.status(200).json(data);
+      })
+      .catch(err => {
+        return res.status(400).json(err);
       });
   });
 
