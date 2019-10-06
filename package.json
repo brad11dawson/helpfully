@@ -5,14 +5,11 @@
   "engines": {
     "node": "10.x"
   },
-  "main": "index.js",
+  "main": "server/index.js",
   "scripts": {
-    "start": "nodemon index.js",
-    "test": "node test.js",
-    "prod": "node index.js"
+    "start": "node server/index.js"
   },
   "dependencies": {
-    "cors": "^2.8.5",
     "express": "^4.15.2",
     "firebase-admin": "^8.6.0",
     "uuid": "^3.3.3"

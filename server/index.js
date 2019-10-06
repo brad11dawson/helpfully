@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const PORT = process.env.PORT || 5000;
+const cors = require("cors");
 const Database = require("./database");
 const uuid = require("uuid/v4");
 
@@ -8,19 +9,15 @@ express()
   .use(express.static(path.join(__dirname, "public")))
   .use(express.json())
   .use(require("./routes"))
+  .use(cors())
   .get("/", (req, res) => {
-    let docRef = Database.getDb()
-      .collection("users")
-      .get()
-      .then(snapshot => {
-        console.log(snapshot.forEach());
-        res.send("hello");
-      })
-      .catch(err => {
-        res.send("An error occured: " + JSON.stringify(err));
-      });
+    res.status(200).json({ hello: "my name is Joe" });
   })
-
+  .all("/", function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    next();
+  })
   .post("/api/creategoal", (req, res) => {
     // make sure there is valid data
     if (typeof req.body.goal_title === "undefined") {

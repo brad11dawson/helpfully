@@ -1,20 +1,25 @@
-const serviceAccount = require("./firebase-credentials.json");
+const serviceAccount = require("../google-credentials.json");
 const admin = require("firebase-admin");
 
-class Database {
+class firebase {
   constructor() {
     admin.initializeApp({
       credential: admin.credential.cert(serviceAccount)
     });
-    this.data = admin.firestore();
+    this.firestore = admin.firestore();
+    this.auth = admin.auth();
   }
 
   getDb() {
-    return this.data;
+    return this.firestore;
+  }
+
+  getAuth() {
+    return this.auth;
   }
 }
 
-const instance = new Database();
+const instance = new firebase();
 Object.freeze(instance);
 
 module.exports = instance;
