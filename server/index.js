@@ -9,16 +9,7 @@ express()
   .use(express.json())
   .use(require("./routes"))
   .get("/", (req, res) => {
-    let docRef = Database.getDb()
-      .collection("users")
-      .get()
-      .then(snapshot => {
-        console.log(snapshot.forEach());
-        res.send("hello");
-      })
-      .catch(err => {
-        res.send("An error occured: " + JSON.stringify(err));
-      });
+    res.status(200).json({ hello: "my name is Joe" });
   })
 
   .post("/api/creategoal", (req, res) => {
