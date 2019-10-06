@@ -117,7 +117,8 @@ router
               goal_title: elem.goal_title,
               goal_description: elem.goal_description,
               pledged_amount: pledgedAmount.amount,
-              completed: elem.completed
+              completed: elem.completed,
+              id: elem.id
             });
           });
           //   console.log("ending map");
