@@ -11,16 +11,19 @@ class NewPeopleList extends React.Component {
                     name: "Joe Ridgley",
                     goal_title: "This is a good title",
                     goal_description: "I really want some money",
+                    id: "dkslfjdsklf"
                 }, 
                 {
                     name: "Jake Ridgley",
                     goal_title: "This is a wierd title",
                     goal_description: "I really want some money", 
+                    id: "fklsdjfsdfa"
                 },  
                 {
                     name: "Jane Ridgley",
                     goal_title: "This is a normal title",
                     goal_description: "I really want some money",
+                    id: "dfjlsdafjsd"
                 }
             ]
         }
@@ -28,8 +31,8 @@ class NewPeopleList extends React.Component {
 
     render() {
         const scrollableContainer = {
-            maxHeight: "50vh",
-            overflowY: "auto"
+            /*maxHeight: "50vh",
+            overflowY: "auto"*/
         };
         return (
             <Container className="border border-dark bg-light" >
@@ -39,7 +42,8 @@ class NewPeopleList extends React.Component {
                         return ( <NewPerson 
                             name={person.name} 
                             title={person.goal_title} 
-                            description={person.goal_description} >
+                            description={person.goal_description}
+                            id={person.id} >
                             </NewPerson>)
                     })}
                 </div>

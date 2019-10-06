@@ -6,6 +6,7 @@ class SponsoredList extends React.Component {
     constructor(props) {
         super();
         this.state = {
+            user_id: "bradbrad@gmail.com",
             peopleList: [ 
                 {
                     name: "Joe Ridgley",
@@ -32,10 +33,30 @@ class SponsoredList extends React.Component {
         }
     }
 
+    componentDidMount() {
+        fetch('https://helpfully.herokuapp.com/api/getpledges', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type':'application/json'},
+            body: {
+                "user_id": this.state.user_id
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("data")
+            this.setState({
+                peopleList: data
+            })
+        })
+    }
+
     render() {
         const scrollableContainer = {
+            /*
             maxHeight: "50vh",
-            overflowY: "auto"
+            overflowY: "auto"*/
         };
         return (
             <Container className="border border-dark bg-light" >
