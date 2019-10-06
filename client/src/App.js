@@ -29,13 +29,8 @@ class App extends React.Component {
         <div className="App">
           <LoginPage />
         </div>
-<<<<<<< HEAD
-      )
-    }    
-=======
       );
     }
->>>>>>> 78de53e11c069270c0cf1a914e05727232c4759d
   }
 }
 
