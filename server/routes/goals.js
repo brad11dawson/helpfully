@@ -5,9 +5,9 @@ const uuid = require("uuid/v4");
 
 /*
 {
-    "goal_title": "Run a Marathon",
-	"goal_description": "I want to run a butt load of miles",
-	"created_by": "WJ1c9G5w7nwVynBXfBiq"
+  "goal_title": string,
+	"goal_description": string,
+	"created_by": string (email)
 }
 */
 router.get("/api/creategoal", (req, res) => {
@@ -46,6 +46,14 @@ router.get("/api/creategoal", (req, res) => {
           completed: false,
           created_on: Date.now(),
           pledges: []
+        })
+        .then(data => {
+          return res.status(200).json(data);
+        })
+        .catch(err => {
+          return res
+            .status(400)
+            .json({ error: "There was an error creating a goal: " + err });
         });
     });
 });

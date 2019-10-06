@@ -1,9 +1,14 @@
 const serviceAccount = require("../google-credentials.json");
 const admin = require("firebase-admin");
+const firebaseLogin = require("firebase");
 
 class firebase {
   constructor() {
     admin.initializeApp({
+      credential: admin.credential.cert(serviceAccount)
+    });
+
+    firebaseLogin.initializeApp({
       credential: admin.credential.cert(serviceAccount)
     });
     this.firestore = admin.firestore();
@@ -16,6 +21,10 @@ class firebase {
 
   getAuth() {
     return this.auth;
+  }
+
+  getSignIn() {
+    return firebaseLogin.auth();
   }
 }
 

@@ -21,20 +21,25 @@ const createUser = (req, res) => {
     .doc(req.body.email)
     .set({
       name: req.body.name,
-      id: uuid(),
+      id: req.body.email,
       description: req.body.bio,
       pledges: []
     })
     .then(data => {
       Console.log("yo good");
-      res.status(200).send({ user_id: data._path.segments[1] });
+      // res.status(200).send({ user_id: data._path.segments[1] });
+      return;
     })
     .catch(err => {
       console.log("ERROR");
-      res.status(400).send({ error: "something happened: " + err });
+      // res.status(400).send({ error: "something happened: " + err });
     });
 };
 
+/*
+Test api endpoint
+GET helpfully.herokuapp.com/users/hello
+*/
 router
   .get("/users/hello", (req, res) => {
     console.log("it worked");
@@ -42,6 +47,25 @@ router
     res.status(200).json({ hello: "it worked" });
   })
   .post("/api/createuser", createUser)
+
+  /*
+  GET https://helpfully.herokuapp.com/api/getpledges
+  Gets all the pledges that a user has pledged money for
+  {
+    user_id: string (email)
+  }
+
+  Responses:
+  [
+    {    
+      "name": "Joseph Ridgley",
+      "goal_title": "Run a Marathon",
+      "goal_description": "I want to run a butt load of miles",
+      "pledged_amount": 12345,
+      "completed": false
+    }, {...}
+  ] 
+  */
   .get("/api/getpledges", async (req, res) => {
     // required
     if (typeof req.body.user_id === "undefined") {
@@ -143,6 +167,33 @@ router
       })
       .catch(err => {
         return res.status(400).json(err);
+      });
+  })
+  /*
+  GET 
+  {
+    "email": string
+    "password": string
+  }
+  */
+  .get("/api/login", (req, res) => {
+    // required
+    if (typeof req.body.email === "undefined") {
+      return res.status(400).json({ error: "email is required" });
+    }
+
+    if (typeof req.body.password === "undefined") {
+      return res.status(400).json({ error: "password is requeered" });
+    }
+
+    firebase
+      .getSignIn()
+      .signInWithEmailAndPassword(req.body.email, req.body.password)
+      .then(data => {
+        res.status(200).json(data);
+      })
+      .catch(err => {
+        res.status(400).json(err);
       });
   });
 
