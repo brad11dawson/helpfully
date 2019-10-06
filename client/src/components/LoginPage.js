@@ -44,7 +44,7 @@ class LoginPage extends React.Component {
         }).then((response) => console.log(response));
     }
 
-    loginEvent(event) {
+    /*loginEvent(event) {
         event.preventDefault()
         fetch('', {
             method: 'POST',
@@ -57,7 +57,7 @@ class LoginPage extends React.Component {
                   password: this.state.password
               })
         }).then((response) => console.log(response));
-    }
+    }*/
 
     switchLogin() {
         this.setState(prevState => {

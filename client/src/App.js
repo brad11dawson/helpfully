@@ -17,12 +17,22 @@ class App extends React.Component {
 
   render() {
     if (this.state.isLoggedIn) {
+      const listContainer = {
+        paddingTop: 20
+     };
       return (
         <div className="App">
           <Header />
-          <SponsoredList />
-          <NewPeopleList />
-          <YourGoalList />
+          <div style={listContainer}>
+            <SponsoredList />
+          </div>
+          <div style={listContainer}>
+           <NewPeopleList />
+          </div>
+          <div style={listContainer}>
+           <YourGoalList />
+          </div>
+
         </div>
       );
     } else {

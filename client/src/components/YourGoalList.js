@@ -25,8 +25,10 @@ class YourGoalList extends React.Component {
 
     render() {
         const scrollableContainer = {
+            /*
             maxHeight: "50vh",
             overflowY: "auto"
+            */
         };
         return (
             <Container className="border border-dark bg-light" >
