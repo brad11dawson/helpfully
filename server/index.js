@@ -9,7 +9,7 @@ express()
   .use(express.static(path.join(__dirname, "public")))
   .use(express.json())
   .use(require("./routes"))
-  .use(cors)
+  .use(cors())
   .get("/", (req, res) => {
     res.status(200).json({ hello: "my name is Joe" });
   })
