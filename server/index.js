@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const PORT = process.env.PORT || 5000;
+const cors = require("cors");
 const Database = require("./database");
 const uuid = require("uuid/v4");
 
@@ -8,6 +9,7 @@ express()
   .use(express.static(path.join(__dirname, "public")))
   .use(express.json())
   .use(require("./routes"))
+  .use(cors)
   .get("/", (req, res) => {
     res.status(200).json({ hello: "my name is Joe" });
   })
