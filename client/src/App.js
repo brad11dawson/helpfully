@@ -21,6 +21,7 @@ class App extends React.Component {
           <Header />
           <SponsoredList />
           <NewPeopleList />
+          {/*<YourGoalList />*/}
         </div>
       );
     } else {
@@ -29,9 +30,7 @@ class App extends React.Component {
           <LoginPage />
         </div>
       )
-    }
-    
-    
+    }    
   }
 }
 

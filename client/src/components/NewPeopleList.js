@@ -33,7 +33,7 @@ class NewPeopleList extends React.Component {
         };
         return (
             <Container className="border border-dark bg-light" >
-                <h2>Your People</h2>
+                <h2>Find New People to Helpify</h2>
                 <div className="sponsored-list" style={scrollableContainer}>
                     {this.state.peopleList.map(person => {
                         return ( <NewPerson 

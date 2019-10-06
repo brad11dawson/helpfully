@@ -10,9 +10,38 @@ class LoginPage extends React.Component {
     constructor() {
         super()
         this.state = {
-            loggingIn: false
+            loggingIn: true,
+            name: "",
+            bio: "",
+            email: "",
+            password: ""
         }
         this.switchLogin = this.switchLogin.bind(this)
+        this.signUp = this.signUp.bind(this)
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(event) {
+        const target = event.target
+        const name = target.name;
+        this.setState({[name]: event.target.value});
+    }
+
+    signUp(event) {
+        event.preventDefault()
+        fetch('https://helpfully.herokuapp.com/api/createaccount', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                  email: this.state.email,
+                  password: this.state.password,
+                  name: this.state.name,
+                  bio: this.state.bio
+              })
+        }).then((response) => console.log(response));
     }
 
     switchLogin() {
@@ -68,24 +97,24 @@ class LoginPage extends React.Component {
                     <Container>
                         <Row className="justify-content-center">
                         <Col sm={12} md={8}>
-                            <Form>
+                            <Form onSubmit={this.signUp}>
                                 <Form.Group controlId="formName">
                                     <Form.Label>Name</Form.Label>
-                                    <Form.Control placeholder="Name" />
+                                    <Form.Control placeholder="Name" name="name" value={this.state.name} onChange={this.handleChange}/>
                                 </Form.Group>
                                 <Form.Group controlId="formBio">
                                     <Form.Label>Tell us about yourself! (optional)</Form.Label>
-                                    <Form.Control as="textarea" rows="6" />
+                                    <Form.Control as="textarea" rows="6" name="bio" value={this.state.bio} onChange={this.handleChange}/>
                                 </Form.Group>
 
                                 <Form.Group controlId="formBasicEmail">
                                     <Form.Label>Email address</Form.Label>
-                                    <Form.Control type="email" placeholder="Enter email" />
+                                    <Form.Control type="email" placeholder="Enter email" name="email" value={this.state.email} onChange={this.handleChange}/>
                                 </Form.Group>
 
                                 <Form.Group controlId="formBasicPassword">
                                     <Form.Label>Password</Form.Label>
-                                    <Form.Control type="password" placeholder="Password" />
+                                    <Form.Control type="password" placeholder="Password" name="password" value={this.state.password} onChange={this.handleChange}/>
                                 </Form.Group>
                                 <Button variant="primary" type="submit">
                                     Submit
