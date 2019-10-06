@@ -1,4 +1,4 @@
-const serviceAccount = require("./firebase-credentials.json");
+const serviceAccount = require("../google-credentials.json");
 const admin = require("firebase-admin");
 
 class Database {
