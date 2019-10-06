@@ -49,7 +49,7 @@ router
   .post("/api/createuser", createUser)
 
   /*
-  GET https://helpfully.herokuapp.com/api/getpledges
+  POST https://helpfully.herokuapp.com/api/getpledges
   Gets all the pledges that a user has pledged money for
   {
     user_id: string (email)
@@ -66,7 +66,7 @@ router
     }, {...}
   ] 
   */
-  .get("/api/getpledges", async (req, res) => {
+  .post("/api/getpledges", async (req, res) => {
     // required
     if (typeof req.body.user_id === "undefined") {
       return res.status(400).json({ error: "user_id is required" });
